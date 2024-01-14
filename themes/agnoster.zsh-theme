@@ -89,7 +89,7 @@ prompt_end() {
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
   if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment red   default "%(!.%{%F{yellow}%}.)"
+    prompt_segment magenta   default "%(!.%{%F{yellow}%}.)"
   fi
 }
 
@@ -113,7 +113,7 @@ prompt_git() {
     ref="◈ $(git describe --exact-match --tags HEAD 2> /dev/null)" || \
     ref="➦ $(git rev-parse --short HEAD 2> /dev/null)" 
     if [[ -n $dirty ]]; then
-      prompt_segment yellow black
+      prompt_segment red black
     else
       prompt_segment green $CURRENT_FG
     fi
@@ -217,7 +217,8 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue $CURRENT_FG "%30<...<%~%<<"
+  # available color names: black, red, green, yellow, blue, magenta, cyan, white
+  prompt_segment cyan $CURRENT_FG "%30<...<%~%<<"
 }
 
 # Virtualenv: current working virtualenv
