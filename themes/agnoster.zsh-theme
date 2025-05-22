@@ -165,7 +165,7 @@ git_toplevel() {
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
   if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment "$AGNOSTER_CONTEXT_BG" "$AGNOSTER_CONTEXT_FG" "%(!.%{%F{$AGNOSTER_STATUS_ROOT_FG}%}.)%n@%m"
+    prompt_segment "$AGNOSTER_CONTEXT_BG" "$AGNOSTER_CONTEXT_FG" "%(!.%{%F{$AGNOSTER_STATUS_ROOT_FG}%}.)" # xstack, remove %n@%m to disable user@host.
   fi
 }
 
@@ -234,7 +234,7 @@ prompt_git() {
     zstyle ':vcs_info:*' formats ' %u%c'
     zstyle ':vcs_info:*' actionformats ' %u%c'
     vcs_info
-    echo -n "${${ref:gs/%/%%}/refs\/heads\//$PL_BRANCH_CHAR }${vcs_info_msg_0_%% }${mode}\n"
+    echo -n "${${ref:gs/%/%%}/refs\/heads\//$PL_BRANCH_CHAR }${vcs_info_msg_0_%% }${mode}" # xstack, remove \n to not  wrap command prompt.
     [[ $AGNOSTER_GIT_INLINE == 'true' ]] && prompt_git_relative
   fi
 }
@@ -308,7 +308,7 @@ prompt_dir() {
     # Git repo and inline path enabled, hence only show the git root
     prompt_segment "$AGNOSTER_DIR_BG" "$AGNOSTER_DIR_FG" "$(git_toplevel | sed "s:^$HOME:~:")"
   else
-    prompt_segment "$AGNOSTER_DIR_BG" "$AGNOSTER_DIR_FG" '%~'
+    prompt_segment "$AGNOSTER_DIR_BG" "$AGNOSTER_DIR_FG" "%20<...<%~%<<" # xstack, 20 char left truncated.
   fi
 }
 
